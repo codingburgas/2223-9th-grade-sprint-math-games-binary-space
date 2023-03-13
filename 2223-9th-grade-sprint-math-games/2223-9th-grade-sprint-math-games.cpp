@@ -1,44 +1,51 @@
 #include "raylib.h"
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
+static void InitGame(void);        // Initialize game
+static void UpdateGame(void);      // Update game (one frame)
+static void DrawGame(void);        // Draw game (one frame)
+static void UpdateDrawGame(void); // Update and Draw (one frame)
+
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    InitWindow(screenWidth, screenHeight, "Binary Space");
+    SetTargetFPS(60);
+    while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
-
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        UpdateDrawGame();
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
-
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();
 
     return 0;
+}
+
+// Initialize game variables
+void InitGame()
+{
+
+}
+
+//Update Game
+void UpdateGame()
+{
+
+}
+
+//Draw game
+void DrawGame()
+{
+
+}
+
+//Update and Draw
+void UpdateDrawGame()
+{
+    void DrawGame();
+    void UpdateGame();
 }
