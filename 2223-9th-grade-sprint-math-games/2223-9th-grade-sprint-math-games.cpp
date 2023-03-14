@@ -1,15 +1,15 @@
 #include "raylib.h"
 
-typedef struct
+struct Player
 {
     float x;
     float y;
     float height;
     float width;
     Vector2 speed;
-} Player;
+};
 
-typedef struct
+struct Enemy
 {
     float x;
     float y;
@@ -17,10 +17,17 @@ typedef struct
     float width;
     Vector2 speed;
     bool active;
-} Enemy;
+};
+struct Zeros
+{
+    Rectangle rect;
+    Vector2 speed;
+    bool active;
+};
 
 //Defines 
 #define MAX_ENEMIES 3
+#define NUM_SHOOTS 50
 // Global Variables Declaration
 
 static int screenWidth = 800;
@@ -28,6 +35,9 @@ static int screenHeight = 450;
 
 static Player player;
 static Enemy enemy[MAX_ENEMIES];
+static Zeros zero[NUM_SHOOTS];
+
+static int shootRate;
 
 static int activeEnemies = 3;
 static void InitGame(void);        // Initialize game
@@ -56,6 +66,10 @@ int main(void)
 // Initialize game variables
 void InitGame()
 {
+    activeEnemies = 1;
+    shootRate = 0;
+
+
     player.x = screenWidth / 2.0f;
     player.y = screenHeight - 50;
     player.width = 20;
@@ -73,6 +87,17 @@ void InitGame()
         enemy[i].speed.x = 5;
         enemy[i].speed.y = 5;
         enemy[i].active = true;
+    }
+    // Initialize shoots of type zero
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        zero[i].rect.x = player.x;
+        zero[i].rect.y = player.y + player.height / 4;
+        zero[i].rect.width = 5;
+        zero[i].rect.height = 5;
+        zero[i].speed.x = 0;
+        zero[i].speed.y = -10;
+        zero[i].active = false;
     }
 }
 
@@ -99,6 +124,43 @@ void UpdateGame()
             }
         }
     }
+
+    if (IsKeyDown(KEY_ZERO))
+    {
+        shootRate += 5;
+        for (int i = 0; i < NUM_SHOOTS; i++)
+        {
+            if (!zero[i].active && shootRate % 40 == 0)
+            {
+                zero[i].rect.x = player.x;
+                zero[i].rect.y = player.y + player.height / 4;
+                zero[i].active = true;
+                break;
+            }
+        }
+    }
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        Rectangle EnemyRec = { enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height };
+        if (zero[i].active)
+        {
+            // Movement
+            zero[i].rect.y += zero[i].speed.y;
+
+            // Collision with enemy
+            for (int j = 0; j < activeEnemies; j++)
+            {
+                if (enemy[j].active)
+                {
+                    if (zero[i].rect.y <= 0) //goes above the screen
+                    {
+                        zero[i].active = false;
+                        shootRate = 0;
+                    }
+                }
+            }
+        }
+    }
 }
 
 //Draw game
@@ -116,6 +178,11 @@ void DrawGame()
     {
         if (enemy[i].active)
             DrawTexture(enemyShip, enemy[i].x, enemy[i].y, WHITE);
+    }
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        if (zero[i].active)
+            DrawText("0", zero[i].rect.x, zero[i].rect.y, 10, BLACK);
     }
     //Stop drawing
     EndDrawing();
