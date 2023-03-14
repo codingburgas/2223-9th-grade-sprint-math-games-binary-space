@@ -24,6 +24,12 @@ struct Zeros
     Vector2 speed;
     bool active;
 };
+struct Ones
+{
+    Rectangle rect;
+    Vector2 speed;
+    bool active;
+};
 
 //Defines 
 #define MAX_ENEMIES 3
@@ -36,8 +42,10 @@ static int screenHeight = 450;
 static Player player;
 static Enemy enemy[MAX_ENEMIES];
 static Zeros zero[NUM_SHOOTS];
+static Ones one[NUM_SHOOTS];
 
 static int shootRate;
+static int shootRate1;
 
 static int activeEnemies = 3;
 static void InitGame(void);        // Initialize game
@@ -69,7 +77,7 @@ void InitGame()
     activeEnemies = 1;
     shootRate = 0;
 
-
+    //Initialize player
     player.x = screenWidth / 2.0f;
     player.y = screenHeight - 50;
     player.width = 20;
@@ -98,6 +106,17 @@ void InitGame()
         zero[i].speed.x = 0;
         zero[i].speed.y = -10;
         zero[i].active = false;
+    }
+    // Initialize shoots of type one
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        one[i].rect.width = 5;
+        one[i].rect.height = 10;
+        one[i].rect.x = player.x;
+        one[i].rect.y = player.y + player.height / 4;
+        one[i].speed.x = 0;
+        one[i].speed.y = -10;
+        one[i].active = false;
     }
 }
 
@@ -139,15 +158,28 @@ void UpdateGame()
             }
         }
     }
+    else if (IsKeyDown(KEY_ONE))
+    {
+        shootRate1 += 5;
+        for (int i = 0; i < NUM_SHOOTS; i++)
+        {
+            if (!one[i].active && shootRate1 % 40 == 0)
+            {
+                one[i].rect.x = player.x;
+                one[i].rect.y = player.y + player.height / 4;
+                one[i].active = true;
+                break;
+            }
+        }
+    }
+
     for (int i = 0; i < NUM_SHOOTS; i++)
     {
-        Rectangle EnemyRec = { enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height };
         if (zero[i].active)
         {
             // Movement
             zero[i].rect.y += zero[i].speed.y;
 
-            // Collision with enemy
             for (int j = 0; j < activeEnemies; j++)
             {
                 if (enemy[j].active)
@@ -156,6 +188,24 @@ void UpdateGame()
                     {
                         zero[i].active = false;
                         shootRate = 0;
+                    }
+                }
+            }
+        }
+    }
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        if (one[i].active)
+        {
+            one[i].rect.y += one[i].speed.y;
+            for (int j = 0; j < activeEnemies; j++)
+            {
+                if (enemy[j].active)
+                {
+                    if (one[i].rect.y <= 0) //goes above the screen
+                    {
+                        one[i].active = false;
+                        shootRate1 = 0;
                     }
                 }
             }
@@ -183,6 +233,11 @@ void DrawGame()
     {
         if (zero[i].active)
             DrawText("0", zero[i].rect.x, zero[i].rect.y, 10, BLACK);
+    }
+    for (int i = 0; i < NUM_SHOOTS; i++)
+    {
+        if (one[i].active)
+            DrawText("1", one[i].rect.x, one[i].rect.y, 10, BLACK);
     }
     //Stop drawing
     EndDrawing();
