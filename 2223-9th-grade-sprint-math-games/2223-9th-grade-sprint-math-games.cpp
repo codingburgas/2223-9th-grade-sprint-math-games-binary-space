@@ -57,14 +57,15 @@ static int shootRate1;
 
 static int activeEnemies = 3;
 
-static void InitGame(void);        // Initialize game
-static void UpdateGame(void);      // Update game (one frame)
-static void DrawGame(Texture2D);        // Draw game (one frame)
-static void UpdateDrawGame(void); // Update and Draw (one frame)
+static void InitGame();        // Initialize game
+static void UpdateGame();      // Update game (one frame)
+static void DrawGame();        // Draw game (one frame)
+static void UpdateDrawGame(); // Update and Draw (one frame)
+static Equation GenerateRandomEquation();
 
 int main(void)
 {
-    InitWindow(screenWidth, screenHeight, "Binary Space");
+    InitWindow(screenWidth, screenHeight, "Binary Space12");
 
     InitGame();
 
@@ -88,34 +89,8 @@ void InitGame()
     shootRate = 0;
     shootRate1 = 0;
 
-    //Equation
-    equation.Operator = GetRandomValue(0, 4);
-    equation.num1 = GetRandomValue(1, 10);
-    equation.num2 = GetRandomValue(1, 10);
-
-    switch (equation.Operator)
-    {
-    case 0:
-        equation.answer += (equation.num1 & equation.num2);
-        equation.Operator = '&';
-        break;
-    case 1:
-        equation.answer += (equation.num1 | equation.num2);
-        equation.Operator = '|';
-        break;
-    case 2:
-        equation.answer += (equation.num1 ^ equation.num2);
-        equation.Operator = '^';
-        break;
-    case 3:
-        equation.answer += (equation.num1 << equation.num2);
-        equation.Operator = '<<';
-        break;
-    case 4:
-        equation.answer += (equation.num1 >> equation.num2);
-        equation.Operator = '>>';
-        break;
-    }
+    //Random equation
+    equation = GenerateRandomEquation();
 
     //Initialize player
     player.x = screenWidth / 2.0f;
@@ -186,6 +161,7 @@ void UpdateGame()
             {
                 enemy[i].x = GetRandomValue(0, screenWidth);
                 enemy[i].y = GetRandomValue(-screenHeight, -20);
+                equation = GenerateRandomEquation();
             }
         }
     }
@@ -310,12 +286,46 @@ void DrawGame()
     }
     for (int i = 0; i < activeEnemies; i++)
     {
-        DrawText(TextFormat("%i %c %i = ", equation.num1, equation.Operator, equation.num2), (enemy[i].x + 15), (enemy[i].y + 15), 25, BLACK);
+        DrawText(TextFormat("%i %c %i = ", equation.num1, equation.Operator, equation.num2), (enemy[i].x + 50), (enemy[i].y + 50), 30, BLACK);
     }
     //Stop drawing
     EndDrawing();
 }
 
+Equation GenerateRandomEquation()
+{
+    Equation equation;
+
+    //Equation
+    equation.Operator = GetRandomValue(0, 4);
+    equation.num1 = GetRandomValue(1, 10);
+    equation.num2 = GetRandomValue(1, 10);
+
+    switch (equation.Operator)
+    {
+    case 0:
+        equation.answer += (equation.num1 & equation.num2);
+        equation.Operator = '&';
+        break;
+    case 1:
+        equation.answer += (equation.num1 | equation.num2);
+        equation.Operator = '|';
+        break;
+    case 2:
+        equation.answer += (equation.num1 ^ equation.num2);
+        equation.Operator = '^';
+        break;
+    case 3:
+        equation.answer += (equation.num1 << equation.num2);
+        equation.Operator = '<<';
+        break;
+    case 4:
+        equation.answer += (equation.num1 >> equation.num2);
+        equation.Operator = '>>';
+        break;
+    }
+    return equation;
+}
 //Update and Draw
 void UpdateDrawGame(void)
 {
