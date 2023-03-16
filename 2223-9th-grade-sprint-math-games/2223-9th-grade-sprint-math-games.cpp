@@ -36,8 +36,8 @@ struct Ones
 #define NUM_SHOOTS 50
 // Global Variables Declaration
 
-static int screenWidth = 800;
-static int screenHeight = 450;
+static int screenWidth = 1280;
+static int screenHeight = 1024;
 
 static Player player;
 static Enemy enemy[MAX_ENEMIES];
@@ -93,7 +93,7 @@ void InitGame()
         enemy[i].x = GetRandomValue(0, screenWidth);
         enemy[i].y = GetRandomValue(-screenHeight, -20);
         enemy[i].speed.x = 5;
-        enemy[i].speed.y = 5;
+        enemy[i].speed.y = 3;
         enemy[i].active = true;
     }
     // Initialize shoots of type zero
@@ -128,6 +128,12 @@ void UpdateGame()
         player.x += player.speed.x;
     if (IsKeyDown(KEY_A))
         player.x -= player.speed.x;
+
+    //Walls
+    if (player.x <= 0)
+        player.x = 0;
+    if (player.x + player.width >= screenWidth)
+        player.x = screenWidth - player.width;
 
     //Enemy behaviour
     for (int i = 0; i < activeEnemies; i++)
@@ -173,17 +179,28 @@ void UpdateGame()
         }
     }
 
+    // Shoot logic for zero
     for (int i = 0; i < NUM_SHOOTS; i++)
     {
+        Rectangle EnemyRec = { enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height };
         if (zero[i].active)
         {
             // Movement
             zero[i].rect.y += zero[i].speed.y;
 
+            // Collision with enemy
             for (int j = 0; j < activeEnemies; j++)
             {
                 if (enemy[j].active)
                 {
+                    if (CheckCollisionRecs(zero[i].rect, EnemyRec))
+                    {
+                        zero[i].active = false;
+                        shootRate = 0;
+                        // enemiesKill++;
+                        // score += 100;
+                    }
+
                     if (zero[i].rect.y <= 0) //goes above the screen
                     {
                         zero[i].active = false;
@@ -193,8 +210,11 @@ void UpdateGame()
             }
         }
     }
+
+
     for (int i = 0; i < NUM_SHOOTS; i++)
     {
+        Rectangle EnemyRec = { enemy[i].x, enemy[i].y, enemy[i].width, enemy[i].height };
         if (one[i].active)
         {
             one[i].rect.y += one[i].speed.y;
@@ -202,6 +222,15 @@ void UpdateGame()
             {
                 if (enemy[j].active)
                 {
+                    if (CheckCollisionRecs(one[i].rect, EnemyRec))
+                    {
+                        one[i].active = false;
+                        shootRate1 = 0;
+
+                        // enemiesKill++;
+                        // score += 100;
+                    }
+
                     if (one[i].rect.y <= 0) //goes above the screen
                     {
                         one[i].active = false;
