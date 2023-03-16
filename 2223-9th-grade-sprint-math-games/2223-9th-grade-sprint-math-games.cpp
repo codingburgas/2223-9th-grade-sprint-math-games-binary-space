@@ -30,6 +30,13 @@ struct Ones
     Vector2 speed;
     bool active;
 };
+struct Equation
+{
+    int num1 = 0;
+    int num2 = 0;
+    char Operator = 0;
+    int answer = 0;
+};
 
 //Defines 
 #define MAX_ENEMIES 3
@@ -37,17 +44,19 @@ struct Ones
 // Global Variables Declaration
 
 static int screenWidth = 1280;
-static int screenHeight = 1024;
+static int screenHeight = 720;
 
 static Player player;
 static Enemy enemy[MAX_ENEMIES];
 static Zeros zero[NUM_SHOOTS];
 static Ones one[NUM_SHOOTS];
+static Equation equation;
 
 static int shootRate;
 static int shootRate1;
 
 static int activeEnemies = 3;
+
 static void InitGame(void);        // Initialize game
 static void UpdateGame(void);      // Update game (one frame)
 static void DrawGame(Texture2D);        // Draw game (one frame)
@@ -74,8 +83,39 @@ int main(void)
 // Initialize game variables
 void InitGame()
 {
+    //Shooting
     activeEnemies = 1;
     shootRate = 0;
+    shootRate1 = 0;
+
+    //Equation
+    equation.Operator = GetRandomValue(0, 4);
+    equation.num1 = GetRandomValue(1, 10);
+    equation.num2 = GetRandomValue(1, 10);
+
+    switch (equation.Operator)
+    {
+    case 0:
+        equation.answer += (equation.num1 & equation.num2);
+        equation.Operator = '&';
+        break;
+    case 1:
+        equation.answer += (equation.num1 | equation.num2);
+        equation.Operator = '|';
+        break;
+    case 2:
+        equation.answer += (equation.num1 ^ equation.num2);
+        equation.Operator = '^';
+        break;
+    case 3:
+        equation.answer += (equation.num1 << equation.num2);
+        equation.Operator = '<<';
+        break;
+    case 4:
+        equation.answer += (equation.num1 >> equation.num2);
+        equation.Operator = '>>';
+        break;
+    }
 
     //Initialize player
     player.x = screenWidth / 2.0f;
