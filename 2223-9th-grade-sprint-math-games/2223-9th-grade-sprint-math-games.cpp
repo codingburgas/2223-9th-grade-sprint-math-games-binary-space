@@ -308,6 +308,10 @@ void DrawGame()
         if (one[i].active)
             DrawText("1", one[i].rect.x, one[i].rect.y, 10, BLACK);
     }
+    for (int i = 0; i < activeEnemies; i++)
+    {
+        DrawText(TextFormat("%i %c %i = ", equation.num1, equation.Operator, equation.num2), (enemy[i].x + 15), (enemy[i].y + 15), 25, BLACK);
+    }
     //Stop drawing
     EndDrawing();
 }
