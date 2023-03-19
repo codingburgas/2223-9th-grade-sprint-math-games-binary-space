@@ -1,5 +1,5 @@
 #include "raylib.h"
-
+#include <string>
 struct Player
 {
     float x;
@@ -55,30 +55,37 @@ static Equation equation;
 static int shootRate;
 static int shootRate1;
 
+static bool playing = false;
 static int activeEnemies = 3;
 
+static std::string playerAnswer;
 static void InitGame();        // Initialize game
 static void UpdateGame();      // Update game (one frame)
 static void DrawGame();        // Draw game (one frame)
 static void UpdateDrawGame(); // Update and Draw (one frame)
 static Equation GenerateRandomEquation();
+static bool mainMenu();
 
-int main(void)
+int main()
 {
     InitWindow(screenWidth, screenHeight, "Binary Space12");
+    mainMenu();
+    // Initialize audio device
+    InitAudioDevice();
 
     InitGame();
 
     SetTargetFPS(60);
-
+    // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        UpdateDrawGame();
-
+        // Update and Draw
+        if (!playing)
+        {
+            UpdateDrawGame();
+        }
     }
-    CloseWindow();
 
-    return 0;
 }
 
 // Initialize game variables
@@ -91,6 +98,7 @@ void InitGame()
 
     //Random equation
     equation = GenerateRandomEquation();
+    equation.answer = 010011;
 
     //Initialize player
     player.x = screenWidth / 2.0f;
@@ -108,7 +116,7 @@ void InitGame()
         enemy[i].x = GetRandomValue(0, screenWidth);
         enemy[i].y = GetRandomValue(-screenHeight, -20);
         enemy[i].speed.x = 5;
-        enemy[i].speed.y = 3;
+        enemy[i].speed.y = 0.3;
         enemy[i].active = true;
     }
     // Initialize shoots of type zero
@@ -212,6 +220,7 @@ void UpdateGame()
                     if (CheckCollisionRecs(zero[i].rect, EnemyRec))
                     {
                         zero[i].active = false;
+                        playerAnswer += '0';
                         shootRate = 0;
                         // enemiesKill++;
                         // score += 100;
@@ -241,6 +250,7 @@ void UpdateGame()
                     if (CheckCollisionRecs(one[i].rect, EnemyRec))
                     {
                         one[i].active = false;
+                        playerAnswer += '1';
                         shootRate1 = 0;
 
                         // enemiesKill++;
@@ -286,7 +296,7 @@ void DrawGame()
     }
     for (int i = 0; i < activeEnemies; i++)
     {
-        DrawText(TextFormat("%i %c %i = ", equation.num1, equation.Operator, equation.num2), (enemy[i].x + 50), (enemy[i].y + 50), 30, BLACK);
+        DrawText(TextFormat("%i %c %i = ", equation.num1, equation.Operator, equation.num2), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
     }
     //Stop drawing
     EndDrawing();
@@ -325,6 +335,43 @@ Equation GenerateRandomEquation()
         break;
     }
     return equation;
+}
+bool mainMenu()
+{
+    Rectangle playButton = { screenWidth / 2 - 50, screenHeight / 2 - 40, 100, 30 };
+    Rectangle quitButton = { screenWidth / 2 - 50, screenHeight / 2 + 20, 100, 30 };
+
+    while (!WindowShouldClose())
+    {
+        // Check if the mouse is over the buttons
+        bool playButtonHovered = CheckCollisionPointRec(GetMousePosition(), playButton);
+        bool quitButtonHovered = CheckCollisionPointRec(GetMousePosition(), quitButton);
+
+        // Check if the buttons are clicked
+        if (playButtonHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            return true;
+        }
+
+        if (quitButtonHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            break;
+        }
+
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        // Draw the buttons
+        DrawRectangleRec(playButton, playButtonHovered ? GRAY : LIGHTGRAY);
+        DrawRectangleRec(quitButton, quitButtonHovered ? GRAY : LIGHTGRAY);
+
+        DrawText("Play", playButton.x + 25, playButton.y + 8, 10, DARKGRAY);
+        DrawText("Quit", quitButton.x + 25, quitButton.y + 8, 10, DARKGRAY);
+
+        EndDrawing();
+    }
+
+    CloseWindow();
 }
 //Update and Draw
 void UpdateDrawGame(void)
