@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)raylib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)2223-9th-grade-sprint-math-games\includes;$(SolutionDir)raylib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +134,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="2223-9th-grade-sprint-math-games.cpp" />
+    <ClCompile Include="src\bitwiseOperators.cpp" />
+    <ClCompile Include="src\mainMenu.cpp" />
+    <ClCompile Include="src\2223-9th-grade-sprint-math-games.cpp" />
+    <ClCompile Include="src\equation.cpp" />
+    <ClCompile Include="src\pch.cpp" />
+    <ClCompile Include="includes\mainMenu.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\bitwiseOperators.h" />
+    <ClInclude Include="includes\equation.h" />
+    <ClInclude Include="includes\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
