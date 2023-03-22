@@ -175,13 +175,14 @@ void UpdateGame()
         {
             enemy[i].y += enemy[i].speed.y;
 
-            if (enemy[i].y > screenHeight)
+            if ((enemy[i].y > screenHeight) || (playerAnswer == equation.answer))
             {
                 enemy[i].x = GetRandomValue(0, screenWidth);
                 enemy[i].y = GetRandomValue(-screenHeight, -20);
                 binary1 = generateRandomBinaryString();
                 binary2 = generateRandomBinaryString();
                 equation = GenerateRandomEquation();
+                playerAnswer = "";
             }
         }
     }
