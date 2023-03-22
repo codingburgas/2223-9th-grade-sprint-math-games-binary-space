@@ -32,10 +32,8 @@ struct Ones
 };
 struct Equation
 {
-    int num1 = 0;
-    int num2 = 0;
     std::string Operator;
-    int answer = 0;
+    std::string answer;
 };
 
 //Defines 
@@ -58,7 +56,6 @@ static int shootRate1;
 static bool playing = false;
 static int activeEnemies = 3;
 
-
 static std::string playerAnswer;
 static std::string binary1;
 static std::string binary2;
@@ -69,6 +66,12 @@ static void DrawGame();        // Draw game (one frame)
 static void UpdateDrawGame(); // Update and Draw (one frame)
 static Equation GenerateRandomEquation();
 static std::string generateRandomBinaryString();
+std::string bitwiseAND(std::string a, std::string b);
+std::string bitwiseOR(std::string a, std::string b);
+std::string bitwiseXOR(std::string a, std::string b);
+std::string leftShift(std::string a, int n);
+std::string rightShift(std::string a, int n);
+
 static bool mainMenu();
 
 int main()
@@ -97,6 +100,8 @@ int main()
 void InitGame()
 {
 
+    //
+    equation = GenerateRandomEquation();
     //Bianry numbers
     binary1 = generateRandomBinaryString();
     binary2 = generateRandomBinaryString();
@@ -104,10 +109,6 @@ void InitGame()
     activeEnemies = 1;
     shootRate = 0;
     shootRate1 = 0;
-
-    //Random equation
-    equation = GenerateRandomEquation();
-    equation.answer = 010011;
 
     //Initialize player
     player.x = screenWidth / 2.0f;
@@ -125,7 +126,7 @@ void InitGame()
         enemy[i].x = GetRandomValue(0, screenWidth);
         enemy[i].y = GetRandomValue(-screenHeight, -20);
         enemy[i].speed.x = 5;
-        enemy[i].speed.y = 3;
+        enemy[i].speed.y = 2;
         enemy[i].active = true;
     }
     // Initialize shoots of type zero
@@ -178,6 +179,8 @@ void UpdateGame()
             {
                 enemy[i].x = GetRandomValue(0, screenWidth);
                 enemy[i].y = GetRandomValue(-screenHeight, -20);
+                binary1 = generateRandomBinaryString();
+                binary2 = generateRandomBinaryString();
                 equation = GenerateRandomEquation();
             }
         }
@@ -307,6 +310,7 @@ void DrawGame()
     {
         DrawText(TextFormat("%s %s %s = ", binary1.c_str(), equation.Operator.c_str(), binary2.c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
     }
+    DrawText(equation.answer.c_str(), 10, 10, 30, BLACK);
     //Stop drawing
     EndDrawing();
 }
@@ -317,29 +321,26 @@ Equation GenerateRandomEquation()
 
     //Equation
     int Operator = GetRandomValue(0, 4);
-    equation.num1 = GetRandomValue(1, 10);
-    equation.num2 = GetRandomValue(1, 10);
-
     switch (Operator)
     {
     case 0:
-        equation.answer += (equation.num1 & equation.num2);
+        equation.answer = bitwiseAND(binary1, binary2);
         equation.Operator = "&";
         break;
     case 1:
-        equation.answer += (equation.num1 | equation.num2);
+        equation.answer = bitwiseOR(binary1, binary2);
         equation.Operator = "|";
         break;
     case 2:
-        equation.answer += (equation.num1 ^ equation.num2);
+        equation.answer = bitwiseXOR(binary1, binary2);
         equation.Operator = "^";
         break;
     case 3:
-        equation.answer += (equation.num1 << equation.num2);
+        equation.answer = leftShift(binary1, 2);
         equation.Operator = "<<";
         break;
     case 4:
-        equation.answer += (equation.num1 >> equation.num2);
+        equation.answer = rightShift(binary1, 2);
         equation.Operator = ">>";
         break;
     }
@@ -393,6 +394,72 @@ std::string generateRandomBinaryString() {
         }
     }
     return binary;
+}
+
+std::string bitwiseAND(std::string a, std::string b) {
+    std::string result = "";
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        if (a[i] == '1' && b[i] == '1') {
+            result += "1";
+        }
+        else {
+            result += "0";
+        }
+    }
+    return result;
+}
+
+std::string bitwiseOR(std::string a, std::string b) {
+    std::string result = "";
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        if (a[i] == '1' || b[i] == '1') {
+            result += "1";
+        }
+        else {
+            result += "0";
+        }
+    }
+    return result;
+}
+
+std::string bitwiseXOR(std::string a, std::string b) {
+    std::string result = "";
+    int n = a.size();
+    for (int i = 0; i < n; i++) {
+        if (a[i] == b[i]) {
+            result += "0";
+        }
+        else {
+            result += "1";
+        }
+    }
+    return result;
+}
+
+std::string leftShift(std::string a, int n) {
+    std::string result = "";
+    int size = a.size();
+    for (int i = n; i < size; i++) {
+        result += a[i];
+    }
+    for (int i = 0; i < n; i++) {
+        result += "0";
+    }
+    return result;
+}
+
+std::string rightShift(std::string a, int n) {
+    std::string result = "";
+    int size = a.size();
+    for (int i = 0; i < size - n; i++) {
+        result += a[i];
+    }
+    for (int i = 0; i < n; i++) {
+        result = "0" + result;
+    }
+    return result;
 }
 //Update and Draw
 void UpdateDrawGame(void)
