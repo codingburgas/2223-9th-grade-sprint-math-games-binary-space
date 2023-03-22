@@ -1,5 +1,4 @@
-#include "raylib.h"
-#include <string>
+#include "pch.h"
 struct Player
 {
     float x;
@@ -55,6 +54,8 @@ static int shootRate1;
 
 static bool playing = false;
 static int activeEnemies = 3;
+static int enemiesKilled = 0;
+static int currentLevel = 1;
 
 static std::string playerAnswer;
 static std::string binary1;
@@ -76,7 +77,7 @@ static bool mainMenu();
 
 int main()
 {
-    InitWindow(screenWidth, screenHeight, "Binary Space12");
+    InitWindow(screenWidth, screenHeight, "Binary Space");
     mainMenu();
     // Initialize audio device
     InitAudioDevice();
@@ -168,6 +169,11 @@ void UpdateGame()
     if (player.x + player.width >= screenWidth)
         player.x = screenWidth - player.width;
 
+    if (enemiesKilled == 6)
+    {
+        currentLevel++;
+        enemiesKilled = 0;
+    }
     //Enemy behaviour
     for (int i = 0; i < activeEnemies; i++)
     {
@@ -175,14 +181,30 @@ void UpdateGame()
         {
             enemy[i].y += enemy[i].speed.y;
 
-            if ((enemy[i].y > screenHeight) || (playerAnswer == equation.answer))
+            if (enemy[i].y > screenHeight)
             {
+                if (currentLevel == 1)
+                {
+                    binary1 = generateRandomBinaryString();
+                    binary2 = generateRandomBinaryString();
+                }
                 enemy[i].x = GetRandomValue(0, screenWidth);
                 enemy[i].y = GetRandomValue(-screenHeight, -20);
-                binary1 = generateRandomBinaryString();
-                binary2 = generateRandomBinaryString();
                 equation = GenerateRandomEquation();
                 playerAnswer = "";
+            }
+            if (playerAnswer == equation.answer)
+            {
+                if (currentLevel == 1)
+                {
+                    binary1 = generateRandomBinaryString();
+                    binary2 = generateRandomBinaryString();
+                }
+                enemy[i].x = GetRandomValue(0, screenWidth);
+                enemy[i].y = GetRandomValue(-screenHeight, -20);
+                equation = GenerateRandomEquation();
+                playerAnswer = "";
+                enemiesKilled++;
             }
         }
     }
@@ -325,23 +347,38 @@ Equation GenerateRandomEquation()
     switch (Operator)
     {
     case 0:
-        equation.answer = bitwiseAND(binary1, binary2);
+        if (currentLevel == 1)
+        {
+            equation.answer = bitwiseAND(binary1, binary2);
+        }
         equation.Operator = "&";
         break;
     case 1:
-        equation.answer = bitwiseOR(binary1, binary2);
+        if (currentLevel == 1)
+        {
+            equation.answer = bitwiseOR(binary1, binary2);
+        }
         equation.Operator = "|";
         break;
     case 2:
-        equation.answer = bitwiseXOR(binary1, binary2);
+        if (currentLevel == 1)
+        {
+            equation.answer = bitwiseXOR(binary1, binary2);
+        }
         equation.Operator = "^";
         break;
     case 3:
-        equation.answer = leftShift(binary1, 2);
+        if (currentLevel == 1)
+        {
+            equation.answer = leftShift(binary1, 2);
+        }
         equation.Operator = "<<";
         break;
     case 4:
-        equation.answer = rightShift(binary1, 2);
+        if (currentLevel == 1)
+        {
+            equation.answer = rightShift(binary1, 2);
+        }
         equation.Operator = ">>";
         break;
     }
@@ -361,7 +398,7 @@ bool mainMenu()
         // Check if the buttons are clicked
         if (playButtonHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            return true;
+            return 1;
         }
 
         if (quitButtonHovered && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
