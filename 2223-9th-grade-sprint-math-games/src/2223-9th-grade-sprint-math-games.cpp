@@ -270,6 +270,7 @@ int main()
                     {
                         DrawText(TextFormat("%s %s = ", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
                     }
+                    DrawText(equation.answer.c_str(), 10, 10, 30, BLACK);
                     break;
                 }
             }

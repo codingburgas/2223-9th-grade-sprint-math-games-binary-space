@@ -14,7 +14,6 @@ struct Equation
     std::string answer;
     std::string answer1;
     std::string answer2;
-    std::string answer3;
 };
 Equation GenerateRandomEquation(Equation& equation, std::string binary1, std::string binary2, int level);
 std::string bitwiseAND(std::string a, std::string b);
