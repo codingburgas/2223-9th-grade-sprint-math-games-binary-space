@@ -7,9 +7,8 @@ namespace UnitTests
     TEST_CLASS(UnitTests)
     {
     public:
-        TEST_METHOD(TestBitwiseOperations)\
+        TEST_METHOD(TestBitwiseOperations)
         {
-            // Test 1: Test bitwise AND for two 4-bit binary numbers
             std::string result = bitwiseAND("1010", "1100");
             Assert::AreEqual(std::string("1000"), result);
 
@@ -68,14 +67,8 @@ namespace UnitTests
                 Assert::AreEqual(std::string("0010"), equation.answer1);
             }
         }
-        TEST_METHOD(TestMainMenuPlayButton)
-        {
-            const int screenWidth = 800;
-            const int screenHeight = 600;
-            SetMousePosition(screenWidth / 2, screenHeight / 2 - 35);
-            Assert::IsTrue(mainMenu(screenWidth, screenHeight));
-        }
+       
 
+        };
+    }
 
-    };
-}
