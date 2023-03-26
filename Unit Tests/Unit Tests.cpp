@@ -99,6 +99,27 @@ namespace UnitTests
             result = bitwiseAND(binary1, binary2);
             Assert::AreEqual(result, std::string("1000"));
         }
+
+        TEST_METHOD(TestBitwiseOR)
+        {
+            // Test with two all-ones binary strings
+            std::string binary1 = "1111";
+            std::string binary2 = "1111";
+            std::string result = bitwiseOR(binary1, binary2);
+            Assert::AreEqual(result, std::string("1111"));
+
+            // Test with two all-zeros binary strings
+            binary1 = "0000";
+            binary2 = "0000";
+            result = bitwiseOR(binary1, binary2);
+            Assert::AreEqual(result, std::string("0000"));
+
+            // Test with two arbitrary binary strings
+            binary1 = "1010";
+            binary2 = "1100";
+            result = bitwiseOR(binary1, binary2);
+            Assert::AreEqual(result, std::string("1110"));
+        }
         
     };
 
