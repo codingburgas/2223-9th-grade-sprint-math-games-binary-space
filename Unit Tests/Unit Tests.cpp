@@ -143,11 +143,25 @@ namespace UnitTests
         }
         TEST_METHOD(TestLeftShift)
         {
-            // Test with an arbitrary binary string and shift amount
-            std::string binary = "1010";
-            int shiftAmount = 2;
-            std::string result = leftShift(binary, shiftAmount);
-        };
+            std::string input = "1010";
+            int shift = 2;
+            std::string expectedOutput = "1000";
+
+            std::string actualOutput = leftShift(input, shift);
+
+            Assert::AreEqual(expectedOutput, actualOutput);
+
+        }
+        TEST_METHOD(TestRightShift)
+        {
+            std::string input = "1010";
+            int shift = 2;
+            std::string expectedOutput = "0010";
+
+            std::string actualOutput = rightShift(input, shift);
+
+            Assert::AreEqual(expectedOutput, actualOutput);
+        }
         
     };
 
