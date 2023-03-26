@@ -7,8 +7,9 @@ namespace UnitTests
     TEST_CLASS(UnitTests)
     {
     public:
-        TEST_METHOD(TestBitwiseOperations)
+        TEST_METHOD(TestBitwiseOperations)\
         {
+            // Test 1: Test bitwise AND for two 4-bit binary numbers
             std::string result = bitwiseAND("1010", "1100");
             Assert::AreEqual(std::string("1000"), result);
 
