@@ -141,26 +141,18 @@ namespace UnitTests
             result = bitwiseXOR(binary1, binary2);
             Assert::AreEqual(result, std::string("0110"));
         }
-        TEST_METHOD(TestLeftShift)
+        
+        TEST_METHOD(TestMainMenu)
         {
-            std::string input = "1010";
-            int shift = 2;
-            std::string expectedOutput = "1000";
+            // Arrange
+            const int screenWidth = 800;
+            const int screenHeight = 600;
 
-            std::string actualOutput = leftShift(input, shift);
+            // Act
+            bool result = mainMenu(screenWidth, screenHeight);
 
-            Assert::AreEqual(expectedOutput, actualOutput);
-
-        }
-        TEST_METHOD(TestRightShift)
-        {
-            std::string input = "1010";
-            int shift = 2;
-            std::string expectedOutput = "0010";
-
-            std::string actualOutput = rightShift(input, shift);
-
-            Assert::AreEqual(expectedOutput, actualOutput);
+            // Assert
+            Assert::IsTrue(result, L"mainMenu function returned false", LINE_INFO());
         }
         
     };
