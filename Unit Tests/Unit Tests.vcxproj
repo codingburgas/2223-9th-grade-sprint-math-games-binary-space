@@ -92,7 +92,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)raylib\include;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)2223-9th-grade-sprint-math-games\includes;$(SolutionDir)raylib\include;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="bitwiseOperators.cpp" />
     <ClCompile Include="equation.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -170,6 +171,7 @@
   <ItemGroup>
     <ClInclude Include="bitwiseOperators.h" />
     <ClInclude Include="equation.h" />
+    <ClInclude Include="mainMenu.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

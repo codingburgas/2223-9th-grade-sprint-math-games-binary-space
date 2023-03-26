@@ -1,14 +1,38 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "Equation.h"
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace MyTests
+namespace UnitTests
 {
-    TEST_CLASS(GenerateRandomEquationTests)
+    TEST_CLASS(UnitTests)
     {
     public:
+        TEST_METHOD(TestBitwiseOperations)
+        {
+            std::string result = bitwiseAND("1010", "1100");
+            Assert::AreEqual(std::string("1000"), result);
+
+            result = bitwiseOR("1010", "1100");
+            Assert::AreEqual(std::string("1110"), result);
+
+            result = bitwiseXOR("1010", "1100");
+            Assert::AreEqual(std::string("0110"), result);
+
+            result = leftShift("1010", 2);
+            Assert::AreEqual(std::string("1000"), result);
+
+            result = rightShift("1010", 2);
+            Assert::AreEqual(std::string("0010"), result);
+
+            int decimal = 10;
+            int binary = decimalToBinary(decimal);
+            Assert::AreEqual(1010, binary);
+
+            decimal = 7;
+            binary = decimalToBinary(decimal);
+            Assert::AreEqual(111, binary);
+        }
+
         TEST_METHOD(TestGenerateRandomEquation)
         {
             Equation equation;
@@ -16,15 +40,12 @@ namespace MyTests
             std::string binary2 = "1100";
             equation = GenerateRandomEquation(equation, binary1, binary2, 1);
 
-            // Check that the equation has been generated
             Assert::IsNotNull(equation.Operator.c_str());
             Assert::IsNotNull(equation.answer1.c_str());
 
-            // Check that the operator is one of the expected values
             bool isValidOperator = (equation.Operator == "&") || (equation.Operator == "|") || (equation.Operator == "^") || (equation.Operator == "<<") || (equation.Operator == ">>");
             Assert::IsTrue(isValidOperator);
 
-            // Check that the answer1 is correct
             if (equation.Operator == "&")
             {
                 Assert::AreEqual(std::string("1000"), equation.answer1);
@@ -46,5 +67,14 @@ namespace MyTests
                 Assert::AreEqual(std::string("0010"), equation.answer1);
             }
         }
+        TEST_METHOD(TestMainMenuPlayButton)
+        {
+            const int screenWidth = 800;
+            const int screenHeight = 600;
+            SetMousePosition(screenWidth / 2, screenHeight / 2 - 35);
+            Assert::IsTrue(mainMenu(screenWidth, screenHeight));
+        }
+
+
     };
 }
