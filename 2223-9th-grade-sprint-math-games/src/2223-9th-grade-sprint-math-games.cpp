@@ -257,6 +257,20 @@ int main()
                         DrawText(TextFormat("%s %s = ", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
                     }
                     break;
+                case 2:
+                    if ((equation.Operator == "&") || (equation.Operator == "|") || (equation.Operator == "^"))
+                    {
+                        DrawText(TextFormat("%s %s %s = ", std::to_string(equation.num1).c_str(), equation.Operator.c_str(), std::to_string(equation.num2).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
+                    }
+                    if ((equation.Operator3 == "<<") || (equation.Operator3 == ">>"))
+                    {
+                        DrawText(TextFormat("%s %s %i = ", std::to_string(equation.num1).c_str(), equation.Operator.c_str(), 2), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
+                    }
+                    if ((equation.Operator3 == "~"))
+                    {
+                        DrawText(TextFormat("%s %s = ", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
+                    }
+                    break;
                 }
             }
             //Stop drawing

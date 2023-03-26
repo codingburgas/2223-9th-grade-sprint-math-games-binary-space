@@ -4,10 +4,10 @@
 
 struct Equation
 {
-    int num1;
-    int num2;
-    int num3;
-    int num4;
+    int num1 = 0;
+    int num2 = 0;
+    int num3 = 0;
+    int num4 = 0;
     std::string Operator;
     std::string Operator2;
     std::string Operator3;

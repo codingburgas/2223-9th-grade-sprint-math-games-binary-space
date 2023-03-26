@@ -78,3 +78,14 @@ std::string rightShift(std::string a, int n) {
     }
     return result;
 }
+int decimalToBinary(int decimalNum) {
+    int binaryNum = 0;
+    int base = 1;
+
+    while (decimalNum > 0) {
+        binaryNum += (decimalNum & 1) * base;
+        decimalNum >>= 1;
+        base *= 10;
+    }
+    return binaryNum;
+}
