@@ -84,7 +84,7 @@ int main()
         if (!playing)
         {
             // Update
-             
+
             // Player movement
             if (IsKeyDown(KEY_D))
                 player.x += player.speed.x;
@@ -112,7 +112,7 @@ int main()
                         GenerateRandomEquation(equation, binary1, binary2, level);
                         playerAnswer = "";
                     }
-                    if (playerAnswer == equation.answer)
+                    if (playerAnswer == equation.answer1)
                     {
                         binary1 = generateRandomBinaryString();
                         binary2 = generateRandomBinaryString();
@@ -120,6 +120,7 @@ int main()
                         enemy[i].y = GetRandomValue(-screenHeight, -20);
                         GenerateRandomEquation(equation, binary1, binary2, level);
                         playerAnswer = "";
+                        enemiesKilled++;
                     }
                 }
             }
@@ -128,6 +129,7 @@ int main()
                 enemiesKilled = 0;
                 level++;
             }
+
             if (IsKeyDown(KEY_ZERO))
             {
                 shootRate += 5;
@@ -239,22 +241,19 @@ int main()
                 if (one[i].active)
                     DrawText("1", one[i].rect.x, one[i].rect.y, 10, BLACK);
             }
+
             for (int i = 0; i < activeEnemies; i++)
             {
-                switch(level)
+                switch (level)
                 {
                 case 1:
                     if (equation.Operator == "&" || equation.Operator == "|" || equation.Operator == "^")
                     {
                         DrawText(TextFormat("%s %s %s = ", binary1.c_str(), equation.Operator.c_str(), binary2.c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
                     }
-                    if ((equation.Operator == "<<") || (equation.Operator == ">>"))
+                    else
                     {
                         DrawText(TextFormat("%s %s %i = ", binary1.c_str(), equation.Operator.c_str(), 2), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
-                    }
-                    if ((equation.Operator == "~"))
-                    {
-                        DrawText(TextFormat("%s %s = ", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
                     }
                     break;
                 case 2:
@@ -270,10 +269,63 @@ int main()
                     {
                         DrawText(TextFormat("%s %s = ", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
                     }
-                    DrawText(equation.answer.c_str(), 10, 10, 30, BLACK);
                     break;
+                case 3:
+                    if ((equation.Operator == "&") || (equation.Operator == "|") || (equation.Operator == "^"))
+                    {
+                        DrawText(TextFormat("(%s %s %s) %s", std::to_string(equation.num1).c_str(), equation.Operator.c_str(), std::to_string(equation.num2).c_str(), equation.Operator2.c_str()), (enemy[i].x), (enemy[i].y - 50), 30, BLACK);
+                        if ((equation.Operator3 == "&") || (equation.Operator3 == "|") || (equation.Operator3 == "^"))
+                        {
+                            DrawText(TextFormat("(%s %s %s)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if ((equation.Operator3 == "<<") || (equation.Operator3 == ">>"))
+                        {
+                            DrawText(TextFormat("(%s %s %i)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), 2), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if (equation.Operator3 == "~")
+                        {
+                            DrawText(TextFormat("(%s %s)", equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y), 30, BLACK);
+                        }
+                    }
+
+
+                    if ((equation.Operator == "<<") || (equation.Operator == ">>"))
+                    {
+                        DrawText(TextFormat("(%s %s %i) %s", std::to_string(equation.num1).c_str(), equation.Operator2.c_str(), 2, equation.Operator2.c_str()), (enemy[i].x), (enemy[i].y - 50), 30, BLACK);
+                        if ((equation.Operator3 == "<<") || (equation.Operator3 == ">>"))
+                        {
+                            DrawText(TextFormat("(%s %s %i)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), 2), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if ((equation.Operator3 == "&") || (equation.Operator3 == "|") || (equation.Operator3 == "^"))
+                        {
+                            DrawText(TextFormat("(%s %s %s)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if (equation.Operator3 == "~")
+                        {
+                            DrawText(TextFormat("(%s %s)", equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                    }
+
+
+                    if ((equation.Operator == "~"))
+                    {
+                        DrawText(TextFormat("(%s %s)", equation.Operator.c_str(), std::to_string(equation.num1).c_str()), (enemy[i].x), (enemy[i].y - 50), 30, BLACK);
+                        if (equation.Operator3 == "~")
+                        {
+                            DrawText(TextFormat("(%s %s)", equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if ((equation.Operator3 == "<<") || (equation.Operator3 == ">>"))
+                        {
+                            DrawText(TextFormat("(%s %s %i)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), 2), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                        if ((equation.Operator3 == "&") || (equation.Operator3 == "|") || (equation.Operator3 == "^"))
+                        {
+                            DrawText(TextFormat("(%s %s %s)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
+                        }
+                    }
                 }
             }
+            DrawText(equation.answer1.c_str(), 10, 10, 30, BLACK);
             //Stop drawing
             EndDrawing();
         }

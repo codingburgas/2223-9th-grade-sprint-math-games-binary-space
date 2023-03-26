@@ -78,6 +78,7 @@ std::string rightShift(std::string a, int n) {
     }
     return result;
 }
+
 int decimalToBinary(int decimalNum) {
     int binaryNum = 0;
     int base = 1;

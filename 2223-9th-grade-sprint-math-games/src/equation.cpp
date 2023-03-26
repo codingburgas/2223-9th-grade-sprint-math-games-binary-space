@@ -63,6 +63,99 @@ Equation GenerateRandomEquation(Equation& equation, std::string binary1, std::st
             equation.answer2 = decimalToBinary((equation.num1 >> 2));
         }
     }
+    case 3:
+    {
+        int Operator2 = GetRandomValue(0, 5);
+        int Operator3 = GetRandomValue(0, 5);
+        equation.num1 = GetRandomValue(0, 10);
+        equation.num2 = GetRandomValue(0, 10);
+        equation.num3 = GetRandomValue(0, 10);
+        equation.num4 = GetRandomValue(0, 10);
+        switch (Operator)
+        {
+        case 0:
+            equation.Operator = "&";
+            equation.answer = "1";
+            break;
+        case 1:
+            equation.Operator = "|";
+            equation.answer = "1";
+            break;
+        case 2:
+            equation.Operator = "^";
+            equation.answer = "1";
+            break;
+        case 3:
+            equation.Operator = "~";
+            equation.answer = "1";
+            break;
+        case 4:
+            equation.Operator = "<<";
+            equation.answer = "1";
+            break;
+        case 5:
+            equation.Operator = ">>";
+            equation.answer = "1";
+            break;
+        }
+
+        switch (Operator2)
+        {
+        case 0:
+            equation.Operator2 = "&";
+            equation.answer = "1";
+            break;
+        case 1:
+            equation.Operator2 = "|";
+            equation.answer = "1";
+            break;
+        case 2:
+            equation.Operator2 = "^";
+            equation.answer = "1";
+            break;
+        case 3:
+            equation.Operator2 = "~";
+            equation.answer = "1";
+            break;
+        case 4:
+            equation.Operator2 = "<<";
+            equation.answer = "1";
+            break;
+        case 5:
+            equation.Operator2 = ">>";
+            equation.answer = "1";
+            break;
+        }
+
+
+        switch (Operator3)
+        {
+        case 0:
+            equation.Operator3 = "&";
+            equation.answer = "1";
+            break;
+        case 1:
+            equation.Operator3 = "|";
+            equation.answer = "1";
+            break;
+        case 2:
+            equation.Operator3 = "^";
+            equation.answer = "1";
+            break;
+        case 3:
+            equation.Operator3 = "~";
+            equation.answer = "1";
+            break;
+        case 4:
+            equation.Operator3 = "<<";
+            equation.answer = "1";
+            break;
+        case 5:
+            equation.Operator3 = ">>";
+            equation.answer = "1";
+            break;
+        }
+    }
     }
     return equation;
 }
