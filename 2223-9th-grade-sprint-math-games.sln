@@ -5,6 +5,14 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2223-9th-grade-sprint-math-games", "2223-9th-grade-sprint-math-games\2223-9th-grade-sprint-math-games.vcxproj", "{9F7599A2-E0AC-4D31-83AA-6A5832D6E395}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18BF1BF9-12A5-4016-BAD5-F77DD012D619}"
+	ProjectSection(SolutionItems) = preProject
+		Unit Tests\Unit Tests.vcxproj = Unit Tests\Unit Tests.vcxproj
+		Unit Tests\Unit Tests.vcxproj.filters = Unit Tests\Unit Tests.vcxproj.filters
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Unit Tests", "Unit Tests\Unit Tests.vcxproj", "{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +29,14 @@ Global
 		{9F7599A2-E0AC-4D31-83AA-6A5832D6E395}.Release|x64.Build.0 = Release|x64
 		{9F7599A2-E0AC-4D31-83AA-6A5832D6E395}.Release|x86.ActiveCfg = Release|Win32
 		{9F7599A2-E0AC-4D31-83AA-6A5832D6E395}.Release|x86.Build.0 = Release|Win32
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Debug|x64.ActiveCfg = Debug|x64
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Debug|x64.Build.0 = Debug|x64
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Debug|x86.ActiveCfg = Debug|Win32
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Debug|x86.Build.0 = Debug|Win32
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Release|x64.ActiveCfg = Release|x64
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Release|x64.Build.0 = Release|x64
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Release|x86.ActiveCfg = Release|Win32
+		{994F1A0B-8AC9-4DAB-8B18-2E6F0D7AAE3E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
