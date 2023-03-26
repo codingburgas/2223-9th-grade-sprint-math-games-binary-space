@@ -67,8 +67,19 @@ namespace UnitTests
                 Assert::AreEqual(std::string("0010"), equation.answer1);
             }
         }
-       
+        TEST_METHOD(TestGenerateRandomBinaryString)
+        {
+            // Test if the generated binary string is of length 4
+            std::string binary = generateRandomBinaryString();
+            Assert::AreEqual(static_cast<int>(binary.size()), 4);
 
-        };
-    }
+            // Test if the generated binary string only contains 0's and 1's
+            for (char c : binary) {
+                Assert::IsTrue(c == '0' || c == '1');
+            }
+        }
 
+        
+    };
+
+}
