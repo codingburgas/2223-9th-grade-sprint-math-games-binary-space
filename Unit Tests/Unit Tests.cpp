@@ -141,6 +141,13 @@ namespace UnitTests
             result = bitwiseXOR(binary1, binary2);
             Assert::AreEqual(result, std::string("0110"));
         }
+        TEST_METHOD(TestLeftShift)
+        {
+            // Test with an arbitrary binary string and shift amount
+            std::string binary = "1010";
+            int shiftAmount = 2;
+            std::string result = leftShift(binary, shiftAmount);
+        };
         
     };
 
