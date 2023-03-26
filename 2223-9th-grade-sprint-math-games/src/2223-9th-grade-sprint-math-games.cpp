@@ -25,6 +25,9 @@ int main()
     std::string binary2 = generateRandomBinaryString();
     std::string playerAnswer;
 
+    int level = 1;
+    int enemiesKilled = 0;
+
     //Load Texture
     Texture2D mainShip = LoadTexture("resources/images/main.png");
     Texture2D enemyShip = LoadTexture("resources/images/enemy.png");
@@ -120,7 +123,11 @@ int main()
                     }
                 }
             }
-
+            if (enemiesKilled == 5)
+            {
+                enemiesKilled = 0;
+                level++;
+            }
             if (IsKeyDown(KEY_ZERO))
             {
                 shootRate += 5;
@@ -234,7 +241,10 @@ int main()
             }
             for (int i = 0; i < activeEnemies; i++)
             {
-                DrawText(TextFormat("%s %s %s = ", binary1.c_str(), equation.Operator.c_str(), binary2.c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
+                if (level == 1)
+                {
+                    DrawText(TextFormat("%s %s %s = ", binary1.c_str(), equation.Operator.c_str(), binary2.c_str()), (enemy[i].x + 10), (enemy[i].y + 15), 30, BLACK);
+                }
             }
             DrawText(equation.answer.c_str(), 10, 10, 30, BLACK);
             //Stop drawing
