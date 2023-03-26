@@ -323,6 +323,7 @@ int main()
                             DrawText(TextFormat("(%s %s %s)", std::to_string(equation.num3).c_str(), equation.Operator3.c_str(), std::to_string(equation.num4).c_str()), (enemy[i].x + 150), (enemy[i].y - 50), 30, BLACK);
                         }
                     }
+
                 }
             }
             DrawText(equation.answer1.c_str(), 10, 10, 30, BLACK);
