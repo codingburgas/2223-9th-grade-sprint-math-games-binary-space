@@ -54,39 +54,3 @@ std::string bitwiseXOR(std::string a, std::string b) {
     }
     return result;
 }
-
-std::string leftShift(std::string a, int n) {
-    std::string result = "";
-    int size = a.size();
-    for (int i = n; i < size; i++) {
-        result += a[i];
-    }
-    for (int i = 0; i < n; i++) {
-        result += "0";
-    }
-    return result;
-}
-
-std::string rightShift(std::string a, int n) {
-    std::string result = "";
-    int size = a.size();
-    for (int i = 0; i < size - n; i++) {
-        result += a[i];
-    }
-    for (int i = 0; i < n; i++) {
-        result = "0" + result;
-    }
-    return result;
-}
-
-int decimalToBinary(int decimalNum) {
-    int binaryNum = 0;
-    int base = 1;
-
-    while (decimalNum > 0) {
-        binaryNum += (decimalNum & 1) * base;
-        decimalNum >>= 1;
-        base *= 10;
-    }
-    return binaryNum;
-}

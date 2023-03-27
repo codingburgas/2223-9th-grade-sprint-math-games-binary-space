@@ -136,7 +136,7 @@
   <ItemGroup>
     <ClCompile Include="src\bitwiseOperators.cpp" />
     <ClCompile Include="src\mainMenu.cpp" />
-    <ClCompile Include="src\2223-9th-grade-sprint-math-games.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\equation.cpp" />
     <ClCompile Include="src\pch.cpp" />
     <ClCompile Include="includes\mainMenu.h" />
