@@ -31,6 +31,8 @@ int main()
     //Load Texture
     Texture2D mainShip = LoadTexture("resources/images/main.png");
     Texture2D enemyShip = LoadTexture("resources/images/enemy.png");
+    Texture2D background = LoadTexture("resources/images/background.png");
+    Rectangle backgroundRect = { 0, 0, screenWidth, screenHeight};
 
     //Initialize player
     player.x = screenWidth / 2.0f;
@@ -218,6 +220,7 @@ int main()
             BeginDrawing();
 
             ClearBackground(RAYWHITE);
+            DrawTextureRec(background, backgroundRect, Vector2{ 0, 0 }, WHITE);
             //Main ship
             DrawTexture(mainShip, player.x, player.y, WHITE);
 
@@ -241,7 +244,7 @@ int main()
             {
                    DrawText(TextFormat("%s %s %s = ", binary1.c_str(), equation.Operator.c_str(), binary2.c_str()), (enemy[i].x + 10), (enemy[i].y + 20), 20, BLACK);
             }
-            /*DrawText(equation.answer.c_str(), 10, 10, 30, BLACK);*/ // cheat code
+            DrawText(equation.answer.c_str(), 10, 10, 30, WHITE);
             //Stop drawing
             EndDrawing();
         }
