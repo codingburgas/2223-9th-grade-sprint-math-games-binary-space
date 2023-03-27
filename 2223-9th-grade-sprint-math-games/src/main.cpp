@@ -51,7 +51,7 @@ int main()
         enemy[i].x = GetRandomValue(0, 1000);
         enemy[i].y = GetRandomValue(-screenHeight, -20);
         enemy[i].speed.x = 5;
-        enemy[i].speed.y = 10;
+        enemy[i].speed.y = 1.5;
         enemy[i].active = true;
     }
     // Initialize shots of type zero
